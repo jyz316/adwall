@@ -1,0 +1,89 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+  {% if username == ad.owner.username %}
+    <script type="text/javascript">
+      function fileChanged(files){
+          var el = document.getElementById("imageDiv")
+          console.log(el)
+          if (!files.length){
+            el.innerHTML = ''
+          }
+          else{   //读取照片
+            var file = files[0]
+            var reader = new FileReader()
+            reader.addEventListener("load", function () {
+              var dataUrl = reader.result
+              el.innerHTML = '<img width="100%" src="' + dataUrl + '" />'
+              setTimeout(adjusttextarea, 100)
+            }, false)
+            reader.readAsDataURL(file)
+          }
+        }
+        function adjusttextarea(){
+          var control = document.getElementById("imageControl")
+          var textarea = document.getElementById("adTextarea")
+          textarea.style.height = control.offsetHeight + 'px'
+          console.log(control)
+        }
+      </script>
+
+    <form method="post" enctype="multipart/form-data">
+      {% csrf_token %}
+      <div class="columns">
+        <div class="column">
+          <div class="field">
+            <label class="label">发布者</label>
+            <div class="control">
+              <input class="input is-static" readonly type="text" value="{{ad.owner.username}}">
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="columns">
+        <div class="column">
+          <div class="field">
+            <label class="label">文本</label>
+            <div class="control">
+              <textarea id="adTextarea" class="textarea" style="max-height:unset;min-height:300px" name="text">{{ad.text}}
+              </textarea>
+            </div>
+          </div>
+        </div>
+        <div class="column">
+          <div class="field">
+            <label class="label">图片</label>
+            <div class="control" id="imageControl">
+              <div id="imageDiv"><img width="100%" src="{{ad_image}}" onload="adjusttextarea()" /></div>
+              <div class="file">
+                <label class="file-label">
+                  <input class="file-input" type="file" name="image" accept="image/*" onchange="fileChanged(this.files)">
+                  <span class="file-cta">
+                    <span class="file-icon">
+                      <i class="fas fa-upload"></i>
+                    </span>
+                    <span class="file-label">
+                      请选择要更改的广告图片...
+                    </span>
+                  </span>
+                </label>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="field is-grouped">
+        <div class="control">
+          <button class="button is-link" type="submit">确认</button>
+        </div>
+        <div class="control">
+          <a class="button is-text" href="/adapp/ad/{{ad.id}}">返回</a>
+        </div>
+      </div>
+    </form>
+  {% endif %}
+
+{% endblock %}  
+    

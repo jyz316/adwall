@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+  <div class="columns">
+    {% if username %}
+    <div class="column">
+      <div class="field is-grouped">
+        <p class="control">
+          <a class="button is-link" href="/adapp/new_ad">
+            添加新广告
+          </a>
+        </p>
+      </div>
+    </div>
+    {% endif %}
+    <div class="column">
+      <form method="GET">
+        <div class="field has-addons">
+          <div class="control has-icons-left is-expanded">
+            <input class="input" type="text" name="search">
+            <span class="icon is-small is-left">
+              <i class="fas fa-search"></i>
+            </span>
+          </div>
+          <div class="control">
+            <button class="button is-link" type="submit">
+              查找
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  {% if ads %}
+    <div>
+      <table class="table is-fullwidth is-hoverable">
+        <thead>
+          <tr>
+            <th>发布者</th>
+            <th>发布时间</th>
+            <th>广告文本</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for ad in ads %}
+          <tr class="ad-row" onclick="window.location='/adapp/ad/{{ad.id}}'">
+            <td>{{ad.owner.username}}</td>
+            <td>{{ad.pub_date_label}}</td>
+            <td>{{ad.text}}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  {% else %}
+    <div>
+      <p>没有找到广告。</p>
+    </div>
+  {% endif %}
+
+{% endblock %}

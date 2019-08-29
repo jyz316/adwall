@@ -1,0 +1,23 @@
+.main-container {
+  padding-top: 15px;
+  padding-bottom: 15px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+.sidebar {
+  width: 200px;
+}
+
+.content-block {
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+.ad-row {
+  cursor: pointer;
+}
+
+pre {
+  white-space: pre-line;
+}

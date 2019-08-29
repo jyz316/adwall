@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+
+{% block content %}
+   
+
+<form method="post">
+  {% csrf_token %}  
+  <div class="field">
+    <label class="label">用户名</label>
+    <div class="control">
+      <input type="text" name="username" class="input">
+    </div>    
+  </div>
+
+  <div class="field">
+    <label class="label">邮箱</label>
+    <div class="control">
+      <input type="text" name="email" class="input">
+    </div>
+  </div>
+
+  <div class="field">
+    <label class="label">密码</label>
+    <div class="control">
+      <input type="password" name="password1" id="password1" class="input">
+    </div>
+  </div>
+
+  <div class="field">
+    <label class="label">确认密码</label>
+    <div class="control">
+      <input type="password" name="password2" id="password2" class="input">
+    </div>
+  </div>
+
+  {% if message %}
+    {% if message == '注册成功'%}
+    <div class="notification is-success">
+        {{message}}!
+    </div>
+    {% else %}
+    <div class="notification is-danger">
+        {{message}}!
+    </div>
+    {% endif %}
+  {% endif %}
+
+
+    <div class="field is-grouped">
+      <div class="control">
+        <button class="button is-link" type="submit">确认</button>
+      </div>
+      <div class="control">
+        <a class="button is-text" href="/adapp" >返回登录界面</a>
+      </div>
+    </div>
+
+</form>
+
+{% endblock %}
+
+
